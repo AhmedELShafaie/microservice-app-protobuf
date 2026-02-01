@@ -41,6 +41,18 @@ python -m venv venv
 .\venv\Scripts\pip install grpcio grpcio-tools typing-extensions protobuf
 ```
 
+```bash
+cd ~/microservices-app/users 
+python -m venv venv
+pip3 install -r ./requirements.txt
+python3 server.py
+
+cd ~/microservices-app/orders
+python -m venv venv
+pip3 install -r ./requirements.txt
+python3 server.py
+```
+
 ## 3. Protobuf Generation
 
 ### Python Services
