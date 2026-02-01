@@ -1,47 +1,67 @@
+Project Commands Log
+Here is the summary of commands executed to create and run the microservices application.
 
-…\gateway > npm init -y
-…\products > npm init -y
+1. Project Initialization
+mkdir microservices-app
+mkdir microservices-app\protos
+mkdir microservices-app\gateway
+mkdir microservices-app\users
+mkdir microservices-app\products
+mkdir microservices-app\orders
+2. Dependencies
+Node.js Services (Gateway & Products)
+cd microservices-app\gateway
+npm init -y
+npm install express @grpc/grpc-js @grpc/proto-loader body-parser
+npm install -D typescript ts-node @types/node @types/express @types/body-parser
+cd ..\products
+npm init -y
+npm install @grpc/grpc-js @grpc/proto-loader
+npm install -D typescript ts-node @types/node
+Python Services (Users & Orders)
+cd ..\users
+python -m venv venv
+.\venv\Scripts\pip install grpcio grpcio-tools typing-extensions protobuf
+cd ..\orders
+python -m venv venv
+.\venv\Scripts\pip install grpcio grpcio-tools typing-extensions protobuf
+3. Protobuf Generation
+Python Services
+cd ..\users
+.\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/user.proto
+cd ..\orders
+.\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/order.proto
+Note: Node.js services load protos dynamically at runtime using @grpc/proto-loader, so no generation step is needed for them.
 
-…\gateway > npm install express @grpc/grpc-js @grpc/proto-loader body-parser && npm install -D typescript ts-node @types/node @types/express
+4. Running the Application
+Start Services (in separate terminals)
 
-…\products > npm install @grpc/grpc-js @grpc/proto-loader && npm install -D typescript ts-node @types/node
+# Users Service
 
-…\users > python -m venv venv && .\venv\Scripts\pip install grpcio grpcio-tools
+cd microservices-app\users
+.\venv\Scripts\python server.py
 
-…\orders > python -m venv venv && .\venv\Scripts\pip install grpcio grpcio-tools
+# Orders Service
 
-…\users > .\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/user.proto
+cd microservices-app\orders
+.\venv\Scripts\python server.py
 
-…\orders > .\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/order.proto
+# Products Service
 
-…\products > npm install @grpc/grpc-js @grpc/proto-loader; npm install -D typescript ts-node @types/node
+cd microservices-app\products
+npx ts-node src/server.ts
 
-…\gateway > npm install express @grpc/grpc-js @grpc/proto-loader body-parser; npm install -D typescript ts-node @types/node @types/express
+# Gateway
 
-…\users > python -m venv venv; .\venv\Scripts\pip install grpcio grpcio-tools
+cd microservices-app\gateway
+npx ts-node src/server.ts
+5. Verification
 
-…\orders > python -m venv venv; .\venv\Scripts\pip install grpcio grpcio-tools
+# Install verification script dependencies (if any) or just run with node
 
-run
+node verify.js
+6. Cleanup
 
-…\users > .\venv\Scripts\python server.py
-…\orders > .\venv\Scripts\python server.py
-…\products > npx ts-node src/server.ts
-…\gateway > npx ts-node src/server.ts
+# Run the stop script
 
-…\products > rd /s /q node_modules; del package-lock.json; npm install
-…\gateway > npm install -D @types/body-parser
-
-…\users > .\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/user.proto
-
-…\orders > .\venv\Scripts\python -m grpc_tools.protoc -I../../protos --python_out=. --grpc_python_out=. ../../protos/order.proto
-
-…\products > Remove-Item -Recurse -Force node_modules; Remove-Item -Force package-lock.json; npm install
-
-curl -X POST <http://localhost:3000/users> -H "Content-Type: application/json" -d "{\"name\": \"Alice\", \"email\": \"<alice@example.com>\"}"
-
-curl <http://localhost:3000/products>
-
-…\products > npm install -D ts-node typescript @types/node
-
-cmd /c "curl -X POST <http://localhost:3000/users> -H \"Content-Type: application/json\" -d \"{\\\"name\\\": \\\"Alice\\\", \\\"email\\\": \\\"<alice@example.com>\\\"}\""
+powershell -ExecutionPolicy Bypass -File stop_services.ps1
