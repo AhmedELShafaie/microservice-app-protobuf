@@ -24,10 +24,35 @@ const userProto = grpc.loadPackageDefinition(userProtoDef) as any;
 const productProto = grpc.loadPackageDefinition(productProtoDef) as any;
 const orderProto = grpc.loadPackageDefinition(orderProtoDef) as any;
 
+// Create Clients configuration env variables
+const config = {
+  userSvc:    process.env.USER_SERVICE_ADDR    || 'localhost:50051',
+  productSvc: process.env.PRODUCT_SERVICE_ADDR || 'localhost:50052',
+  orderSvc:   process.env.ORDER_SERVICE_ADDR   || 'localhost:50053',
+};
+
 // Create Clients
-const userClient = new userProto.users.UserService('localhost:50051', grpc.credentials.createInsecure());
-const productClient = new productProto.products.ProductService('localhost:50052', grpc.credentials.createInsecure());
-const orderClient = new orderProto.orders.OrderService('localhost:50053', grpc.credentials.createInsecure());
+
+
+// const userClient = new userProto.users.UserService('localhost:50051', grpc.credentials.createInsecure());
+// const productClient = new productProto.products.ProductService('localhost:50052', grpc.credentials.createInsecure());
+// const orderClient = new orderProto.orders.OrderService('localhost:50053', grpc.credentials.createInsecure());
+
+// Initialize clients using the config
+const userClient = new userProto.users.UserService(
+    config.userSvc, 
+    grpc.credentials.createInsecure()
+);
+
+const productClient = new productProto.products.ProductService(
+    config.productSvc, 
+    grpc.credentials.createInsecure()
+);
+
+const orderClient = new orderProto.orders.OrderService(
+    config.orderSvc, 
+    grpc.credentials.createInsecure()
+);
 
 // Routes
 
