@@ -1,14 +1,14 @@
-FROM python:3.9-slim-buster as build
+FROM python:3.9-slim-bullseye AS build
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY ./orders/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY ./orders .
 
-FROM python:3.9-slim-buster as production
+FROM python:3.9-slim-bullseye AS production
 
 WORKDIR /app
 
