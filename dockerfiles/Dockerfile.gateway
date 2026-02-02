@@ -11,7 +11,7 @@ COPY ../gateway .
 #RUN npm run build
 
 FROM node:16-alpine AS production
-RUN mkdir -p /protos
+RUN mkdir -p /protos &&  apk update && apk add --no-cache curl jq
 COPY protos /protos
 WORKDIR /app
 
