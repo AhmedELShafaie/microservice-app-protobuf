@@ -96,6 +96,70 @@ npx ts-node src/server.ts
 node verify.js
 ```
 
+## 6. Verification using cURL
+
+### For Order Service
+
+To create an Order using Order Service
+
+```bash
+curl -X POST "http://localhost:3000/orders" \
+-H "Content-Type: application/json" \
+-d "{\"user_id\": \"d4344acd-8365-4d19-8170-12b5b3e47685\" ,\"items\": [{ \"product_id\" : \"100\" , \"quantity\": 2},{\"product_id\" : \"200\" , \"quantity\": 2}]}"
+```
+
+To Query an Order with OrderID
+
+```bash
+curl -X GET  "http://localhost:3000/orders/72629a52-7a78-4b7d-934f-4c673f472c3e" \
+-H "Content-Type: application:json"
+```
+
+### For Users Service
+
+To create User using User microservice
+
+```bash
+curl -X POST http://localhost:3000/users -H "Content-Type:application/json" -d "{\"name\":\"Ahmed\", \"email\": \"ahmed@example.com\"}"
+```
+
+Query user
+
+```bash
+curl -sSL -X GET http://localhost:3000/users/8a70563c-d53f-42b4-9a8d-1debe0b3fc66 -H "Content-Type: application/json" | jq
+```
+
+## Build Docker images for each microservice
+
+### Build GateWay image
+
+```bash
+cd /home/ubuntu/microservice-app-protobuf 
+docker image  build -t ahmedfathy/microservice-app-protobuf-gateway:${VERSION} -f dockerfiles/Dockerfile.gateway .
+```
+
+### Build Products image
+
+```bash
+cd /home/ubuntu/microservice-app-protobuf
+docker build -t ahmedfathy/microservice-app-protobuf-products:${VERSION}$ -f  dockerfiles/Dockerfile.products .
+```
+
+### Build Orders image
+
+```bash
+cd /home/ubuntu/microservice-app-protobuf
+docker image  build -t ahmedfathy/microservice-app-protobuf-order:${VERSION}$ -f dockerfiles/Dockerfile.orders .
+```
+
+### Build Users image
+
+```bash
+cd /home/ubuntu/microservice-app-protobuf
+docker image  build -t ahmedfathy/microservice-app-protobuf-users:${VERSION}$ -f dockerfiles/Dockerfile.users .
+
+```
+
 ## 6. Cleanup
 
 ```powershell
