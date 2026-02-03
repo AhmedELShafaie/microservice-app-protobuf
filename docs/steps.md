@@ -141,6 +141,9 @@ docker image  build -t ahmedfathy/microservice-app-protobuf-order:${VERSION}$ -f
 ### Build Users image
 
 ```bash
+cd /home/ubuntu/microservice-app-protobuf
+docker image  build -t ahmedfathy/microservice-app-protobuf-users:${VERSION}$ -f dockerfiles/Dockerfile.users .
+
 ```
 
 ## 6. Cleanup
