@@ -2,11 +2,11 @@ FROM python:3.9-slim-bullseye AS build
 
 WORKDIR /app
 
-COPY ./orders/requirements.txt .
+COPY ./users/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./orders .
+COPY ./users .
 
 FROM python:3.9-slim-bullseye AS production
 
