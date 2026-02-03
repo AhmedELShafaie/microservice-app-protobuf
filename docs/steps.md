@@ -100,7 +100,7 @@ node verify.js
 
 ### For Order Service
 
-To create an Order Service
+To create an Order using Order Service
 
 ```bash
 curl -X POST "http://localhost:3000/orders" \
@@ -113,6 +113,20 @@ To Query an Order with OrderID
 ```bash
 curl -X GET  "http://localhost:3000/orders/72629a52-7a78-4b7d-934f-4c673f472c3e" \
 -H "Content-Type: application:json"
+```
+
+### For Users Service
+
+To create User using User microservice
+
+```bash
+curl -X POST http://localhost:3000/users -H "Content-Type:application/json" -d "{\"name\":\"Ahmed\", \"email\": \"ahmed@example.com\"}"
+```
+
+Query user
+
+```bash
+curl -sSL -X GET http://localhost:3000/users/8a70563c-d53f-42b4-9a8d-1debe0b3fc66 -H "Content-Type: application/json" | jq
 ```
 
 ## Build Docker images for each microservice
