@@ -1,0 +1,23 @@
+FROM node:16-alpine AS build
+
+WORKDIR /app
+
+COPY ../products/package*.json ./
+
+RUN npm install
+
+COPY ../products .
+
+#RUN npm run build
+
+FROM node:16-alpine AS production
+RUN mkdir -p /protos
+COPY protos /protos
+WORKDIR /app
+
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app ./
+COPY ../products/package*.json ./
+EXPOSE 50052
+
+CMD ["npx", "ts-node", "./src/server.ts"]

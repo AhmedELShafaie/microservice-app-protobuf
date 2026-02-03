@@ -1,0 +1,20 @@
+FROM python:3.9-slim-bullseye AS build
+
+WORKDIR /app
+
+COPY ./orders/requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./orders .
+
+FROM python:3.9-slim-bullseye AS production
+
+WORKDIR /app
+
+COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=build /app /app
+
+EXPOSE 50051
+
+CMD ["python", "server.py"]
