@@ -1,4 +1,5 @@
 # microservice-app-protobuf
+
 This is a microservice app created to illustrate Protocol buffer usage
 
 # Project Commands Log
@@ -132,7 +133,7 @@ Query user
 curl -sSL -X GET http://localhost:3000/users/8a70563c-d53f-42b4-9a8d-1debe0b3fc66 -H "Content-Type: application/json" | jq
 ```
 
-## Build Docker images for each microservice
+## 7. Build Docker images for each microservice
 
 ### Build GateWay image
 
@@ -163,7 +164,7 @@ docker image  build -t ahmedfathy/microservice-app-protobuf-users:${VERSION}$ -f
 
 ```
 
-## 6. Cleanup
+## 8. Cleanup
 
 ```powershell
 # Run the stop script
