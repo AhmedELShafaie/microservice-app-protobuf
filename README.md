@@ -121,7 +121,7 @@ curl -X GET  "http://localhost:3000/orders/72629a52-7a78-4b7d-934f-4c673f472c3e"
 
 ### For Users Service
 
-To create User using User microservice
+To create a user using the User microservice
 
 ```bash
 curl -X POST http://localhost:3000/users -H "Content-Type:application/json" -d "{\"name\":\"Ahmed\", \"email\": \"ahmed@example.com\"}"
@@ -135,7 +135,7 @@ curl -sSL -X GET http://localhost:3000/users/8a70563c-d53f-42b4-9a8d-1debe0b3fc6
 
 ## 7. Build Docker images for each microservice
 
-### Build GateWay image
+### Build Gateway image
 
 ```bash
 cd /home/ubuntu/microservice-app-protobuf 
@@ -161,7 +161,6 @@ docker image  build -t ahmedfathy/microservice-app-protobuf-order:${VERSION}$ -f
 ```bash
 cd /home/ubuntu/microservice-app-protobuf
 docker image  build -t ahmedfathy/microservice-app-protobuf-users:${VERSION}$ -f dockerfiles/Dockerfile.users .
-
 ```
 
 ## 8. Cleanup
